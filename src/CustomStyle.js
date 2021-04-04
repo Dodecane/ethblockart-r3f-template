@@ -219,18 +219,21 @@ export default function CustomStyle({
     const seed = parseInt(hash.slice(0, 16), 16);
     shuffleBag.current = new MersenneTwist(seed);
 
-    const ethTransferred = fromWei(
-      block.transactions
-        .map((tx) => toBN(tx.value.hex))
-        .reduce((a, b) => a.add(b))
-    );
-    console.log("ETH transferred: " + ethTransferred + " ETH");
-
     const gasPriceList = block.transactions.map((tx) => toBN(tx.gasPrice.hex));
-    const avgGasPrice = fromWei(
-      gasPriceList.reduce((a, b) => a.add(b)).div(toBN(gasPriceList.length)),
-      "Gwei"
-    );
+    let ethTransferred = 0;
+    let avgGasPrice = 0;
+    if (block.transactions.length !== 0) {
+      ethTransferred = fromWei(
+        block.transactions
+          .map((tx) => toBN(tx.value.hex))
+          .reduce((a, b) => a.add(b))
+      );
+      avgGasPrice = fromWei(
+        gasPriceList.reduce((a, b) => a.add(b)).div(toBN(gasPriceList.length)),
+        "Gwei"
+      );
+    }
+    console.log("ETH transferred: " + ethTransferred + " ETH");
     console.log("Average gas price: " + avgGasPrice + " Gwei");
 
     function getScale() {
@@ -297,11 +300,17 @@ export default function CustomStyle({
     function getShape() {
       let blockNumber = block.number;
       switch (true) {
-        case blockNumber % 30 == 0:
+        case blockNumber % 30 === 0:
           return "pentagonal delta orb";
-        case blockNumber % 12 == 0:
+        case blockNumber % 24 === 0:
+          return "square delta orb";
+        case blockNumber % 18 === 0:
+          return "hexagonal jewel";
+        case blockNumber % 15 === 0:
+          return "pentagonal jewel";
+        case blockNumber % 12 === 0:
           return "square jewel";
-        case blockNumber % 3 == 0:
+        case blockNumber % 3 === 0:
           return "Toshie's jewel";
         default:
           return "square";
