@@ -30,10 +30,10 @@ Getting started:
 
 // Required style metadata
 const styleMetadata = {
-  name: "",
+  name: "Orbs and Jewels",
   description: "",
   image: "",
-  creator_name: "",
+  creator_name: "Dodecane",
   options: {
     mod1: 1,
     mod2: 1,
@@ -273,27 +273,39 @@ export default function CustomStyle({
       let scale = avgGasPrice / 200;
       switch (true) {
         case scale <= 0.125:
-          return ["1", randomColoursFromPalettes(blue1, blue1, blue1mono)];
+          return [
+            "cobalt blues",
+            randomColoursFromPalettes(blue1, blue1, blue1mono),
+          ];
         case scale <= 0.25:
-          return ["2", randomColoursFromPalettes(blue2, blue2, blue2mono)];
+          return [
+            "bell blues",
+            randomColoursFromPalettes(blue2, blue2, blue2mono),
+          ];
         case scale <= 0.375:
-          return ["3", randomColoursFromPalettes(blue3, blue3, blue3mono)];
+          return [
+            "turquoise blues",
+            randomColoursFromPalettes(blue3, blue3, blue3mono),
+          ];
         case scale <= 0.5:
           return [
-            "4",
+            "reddish blues",
             randomColoursFromPalettes(blue3mono, red2mono, blue1mono),
           ];
         case scale <= 0.625:
           return [
-            "5",
+            "bluish reds",
             randomColoursFromPalettes(red3mono, blue2mono, red1mono),
           ];
         case scale <= 0.75:
-          return ["6", randomColoursFromPalettes(red3, red3, red3mono)];
+          return [
+            "chablis reds",
+            randomColoursFromPalettes(red3, red3, red3mono),
+          ];
         case scale <= 0.875:
-          return ["7", randomColoursFromPalettes(red2, red2, red2mono)];
+          return ["pink reds", randomColoursFromPalettes(red2, red2, red2mono)];
         default:
-          return ["8", randomColoursFromPalettes(red1, red1, red1mono)];
+          return ["jam reds", randomColoursFromPalettes(red1, red1, red1mono)];
       }
     }
 
@@ -310,10 +322,8 @@ export default function CustomStyle({
           return "pentagonal jewel";
         case blockNumber % 12 === 0:
           return "square jewel";
-        case blockNumber % 3 === 0:
-          return "Toshie's jewel";
         default:
-          return "square";
+          return "Toshie's jewel";
       }
     }
 
