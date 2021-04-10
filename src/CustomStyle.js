@@ -219,17 +219,24 @@ export default function CustomStyle({
     const seed = parseInt(hash.slice(0, 16), 16);
     shuffleBag.current = new MersenneTwist(seed);
 
-    const gasPriceList = block.transactions.map((tx) => toBN(tx.gasPrice.hex));
+    const gasPriceList = block.transactions.map((tx) => {
+      let gasPrice = tx.gasPrice.hex || 0;
+      return toBN(gasPrice);
+    });
     let ethTransferred = 0;
     let avgGasPrice = 0;
     if (block.transactions.length !== 0) {
       ethTransferred = fromWei(
         block.transactions
-          .map((tx) => toBN(tx.value.hex))
+          .map((tx) => {
+            let value = tx.value.hex || 0;
+            return toBN(value);
+          })
           .reduce((a, b) => a.add(b))
       );
+      let gasPriceListLength = gasPriceList.length || 1;
       avgGasPrice = fromWei(
-        gasPriceList.reduce((a, b) => a.add(b)).div(toBN(gasPriceList.length)),
+        gasPriceList.reduce((a, b) => a.add(b)).div(toBN(gasPriceListLength)),
         "Gwei"
       );
     }
